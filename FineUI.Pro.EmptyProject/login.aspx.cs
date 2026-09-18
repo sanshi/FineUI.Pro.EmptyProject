@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Text;
+using System.Security.Cryptography;
 using FineUI.Pro;
 
 namespace FineUI.Pro.EmptyProject
@@ -44,13 +45,22 @@ namespace FineUI.Pro.EmptyProject
         /// <returns></returns>
         private string GenerateRandomCode()
         {
-            string s = String.Empty;
-            Random random = new Random();
-            for (int i = 0; i < 6; i++)
+            StringBuilder code = new StringBuilder(6);
+            byte[] randomByte = new byte[1];
+            using (RandomNumberGenerator random = RandomNumberGenerator.Create())
             {
-                s += random.Next(10).ToString();
+                for (int i = 0; i < 6; i++)
+                {
+                    do
+                    {
+                        random.GetBytes(randomByte);
+                    }
+                    while (randomByte[0] >= 250);
+
+                    code.Append(randomByte[0] % 10);
+                }
             }
-            return s;
+            return code.ToString();
         }
 
         protected void imgCaptcha_Click(object sender, EventArgs e)
@@ -61,11 +71,17 @@ namespace FineUI.Pro.EmptyProject
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            if (tbxCaptcha.Text != Session["CaptchaImageText"].ToString())
+            string captchaText = Session["CaptchaImageText"] as string;
+            if (String.IsNullOrEmpty(captchaText)
+                || !String.Equals(tbxCaptcha.Text, captchaText, StringComparison.Ordinal))
             {
+                InitCaptchaCode();
                 Alert.ShowInTop("验证码错误！", String.Empty, tbxCaptcha.GetMarkInvalidReference("验证码错误！") + tbxCaptcha.GetFocusReference());
                 return;
             }
+
+            // 验证码校验成功后立即失效，避免同一个验证码被重复使用。
+            Session.Remove("CaptchaImageText");
 
             if (tbxUserName.Text == "admin" && tbxPassword.Text == "admin")
             {

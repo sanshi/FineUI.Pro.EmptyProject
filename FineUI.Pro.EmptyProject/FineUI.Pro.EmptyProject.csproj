@@ -161,8 +161,8 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
+  <!-- 如需扩展构建流程，可取消下面目标的注释并添加任务。
+       其他扩展点可查看 Microsoft.Common.targets。
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">

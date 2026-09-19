@@ -12,7 +12,7 @@ namespace CaptchaImage
     /// </summary>
     public class CaptchaImage
     {
-        // Public properties (all read-only).
+        // 公开属性（全部只读）。
         public string Text
         {
             get { return this.text; }
@@ -30,19 +30,19 @@ namespace CaptchaImage
             get { return this.height; }
         }
 
-        // Internal properties.
+        // 内部属性。
         private string text;
         private int width;
         private int height;
         private string familyName;
         private Bitmap image;
 
-        // For generating random numbers.
+        // 用来生成随机数。
         private Random random = new Random();
 
         // ====================================================================
-        // Initializes a new instance of the CaptchaImage class using the
-        // specified text, width and height.
+        // 用以下参数初始化 CaptchaImage 实例：
+        // 指定的文本、宽度和高度。
         // ====================================================================
         public CaptchaImage(string s, int width, int height)
         {
@@ -52,8 +52,8 @@ namespace CaptchaImage
         }
 
         // ====================================================================
-        // Initializes a new instance of the CaptchaImage class using the
-        // specified text, width, height and font family.
+        // 用以下参数初始化 CaptchaImage 实例：
+        // 指定的文本、宽度、高度和字体族。
         // ====================================================================
         public CaptchaImage(string s, int width, int height, string familyName)
         {
@@ -64,7 +64,7 @@ namespace CaptchaImage
         }
 
         // ====================================================================
-        // This member overrides Object.Finalize.
+        // 重写 Object.Finalize。
         // ====================================================================
         ~CaptchaImage()
         {
@@ -72,7 +72,7 @@ namespace CaptchaImage
         }
 
         // ====================================================================
-        // Releases all resources used by this object.
+        // 释放此对象占用的全部资源。
         // ====================================================================
         public void Dispose()
         {
@@ -81,21 +81,21 @@ namespace CaptchaImage
         }
 
         // ====================================================================
-        // Custom Dispose method to clean up unmanaged resources.
+        // 自定义 Dispose，用来清理非托管资源。
         // ====================================================================
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
-                // Dispose of the bitmap.
+                // 释放位图。
                 this.image.Dispose();
         }
 
         // ====================================================================
-        // Sets the image width and height.
+        // 设置图片宽度和高度。
         // ====================================================================
         private void SetDimensions(int width, int height)
         {
-            // Check the width and height.
+            // 校验宽度和高度。
             if (width <= 0)
                 throw new ArgumentOutOfRangeException("width", width, "Argument out of range, must be greater than zero.");
             if (height <= 0)
@@ -105,11 +105,11 @@ namespace CaptchaImage
         }
 
         // ====================================================================
-        // Sets the font used for the image text.
+        // 设置图片文字使用的字体。
         // ====================================================================
         private void SetFamilyName(string familyName)
         {
-            // If the named font is not installed, default to a system font.
+            // 指定的字体没装就回退到系统字体。
             try
             {
                 Font font = new Font(this.familyName, 13F);
@@ -123,27 +123,27 @@ namespace CaptchaImage
         }
 
         // ====================================================================
-        // Creates the bitmap image.
+        // 创建位图。
         // ====================================================================
         private void GenerateImage()
         {
-            // Create a new 32-bit bitmap image.
+            // 新建一张 32 位位图。
             Bitmap bitmap = new Bitmap(this.width, this.height, PixelFormat.Format32bppArgb);
 
-            // Create a graphics object for drawing.
+            // 创建用于绘图的 Graphics 对象。
             Graphics g = Graphics.FromImage(bitmap);
             g.SmoothingMode = SmoothingMode.AntiAlias;
             Rectangle rect = new Rectangle(0, 0, this.width, this.height);
 
-            // Fill in the background.
+            // 填充背景。
             HatchBrush hatchBrush = new HatchBrush(HatchStyle.SmallConfetti, Color.LightGray, Color.White);
             g.FillRectangle(hatchBrush, rect);
 
-            // Set up the text font.
+            // 设置文字字体。
             SizeF size;
             float fontSize = rect.Height + 1;
             Font font;
-            // Adjust the font size until the text fits within the image.
+            // 不断调小字号，直到文字能放进图片。
             do
             {
                 fontSize--;
@@ -151,12 +151,12 @@ namespace CaptchaImage
                 size = g.MeasureString(this.text, font);
             } while (size.Width > rect.Width);
 
-            // Set up the text format.
+            // 设置文字格式。
             StringFormat format = new StringFormat();
             format.Alignment = StringAlignment.Center;
             format.LineAlignment = StringAlignment.Center;
 
-            // Create a path using the text and warp it randomly.
+            // 按文字生成路径并随机扭曲。
             GraphicsPath path = new GraphicsPath();
             path.AddString(this.text, font.FontFamily, (int)font.Style, font.Size, rect, format);
             float v = 8F;
@@ -171,11 +171,11 @@ namespace CaptchaImage
             matrix.Translate(0F, 0F);
             path.Warp(points, rect, matrix, WarpMode.Perspective, 0F);
 
-            // Draw the text.
+            // 绘制文字。
             hatchBrush = new HatchBrush(HatchStyle.LargeConfetti, Color.Green, Color.DarkGray);
             g.FillPath(hatchBrush, path);
 
-            // Add some random noise.
+            // 撒一些随机噪点。
             int m = Math.Max(rect.Width, rect.Height);
             for (int i = 0; i < (int)(rect.Width * rect.Height / 30F); i++)
             {
@@ -186,12 +186,12 @@ namespace CaptchaImage
                 g.FillEllipse(hatchBrush, x, y, w, h);
             }
 
-            // Clean up.
+            // 清理资源。
             font.Dispose();
             hatchBrush.Dispose();
             g.Dispose();
 
-            // Set the image.
+            // 保存图片。
             this.image = bitmap;
         }
     }

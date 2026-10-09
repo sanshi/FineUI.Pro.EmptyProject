@@ -75,8 +75,8 @@
     <Content Include="res\css\common.css" />
     <Content Include="res\css\index.css" />
     <Content Include="res\images\blank.png" />
-    <Content Include="res\images\blank_180.png" />
-    <Content Include="res\images\my_face_80.jpg" />
+    <Content Include="res\images\blank-180.png" />
+    <Content Include="res\images\my-face-80.jpg" />
     <Content Include="res\languages\zh_UEY.js" />
     <Content Include="res\themes\custom_default\theme.css" />
     <Content Include="res\themes\image_blue_sky\sky.jpg" />

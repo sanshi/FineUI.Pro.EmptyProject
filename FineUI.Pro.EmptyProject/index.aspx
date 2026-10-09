@@ -77,7 +77,7 @@
                                 <div class="header-right">
                                     <f:Button runat="server" CssClass="icononlyaction themes" ID="btnThemeSelect" ToolTip="主题仓库" IconAlign="Top"
                                         IconFont="_Skin" EnableDefaultState="false" EnableDefaultCorner="false" ClickHandler="onThemeSelectClick"></f:Button>
-                                    <f:Button runat="server" CssClass="userpicaction" Text="三生石上" IconUrl="~/res/images/my_face_80.jpg" IconAlign="Left"
+                                    <f:Button runat="server" CssClass="userpicaction" Text="三生石上" IconUrl="~/res/images/my-face-80.jpg" IconAlign="Left"
                                         EnableDefaultState="false" EnableDefaultCorner="false">
                                         <Menu runat="server">
                                             <f:MenuButton Text="个人信息" IconFont="_User" runat="server" ClickHandler="onUserProfileClick"></f:MenuButton>

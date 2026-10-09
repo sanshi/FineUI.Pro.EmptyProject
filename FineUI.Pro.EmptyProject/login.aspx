@@ -6,12 +6,16 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link href="res/css/common.css" rel="stylesheet" />
-    <style>
-        .imgcaptcha .f-field-label {
-            margin: 0;
-        }
-    </style>
+    <%-- 将资源表达式放在独立容器内，保持 head 可追加控件，确保 FineUI 能插入公共脚本和样式。 --%>
+    <asp:PlaceHolder runat="server">
+        <link href="<%= PageContext.ResolveUrl("~/res/css/common.css") %>" rel="stylesheet" />
+        <style>
+            .imgcaptcha .f-field-label {
+                margin: 0;
+            }
+
+        </style>
+    </asp:PlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -21,8 +25,7 @@
         密码：admin
         <br />
         <br />
-        <f:Window ID="Window1" runat="server" Title="登录表单" IsModal="false" EnableClose="false"
-            WindowPosition="GoldenSection" Width="450px">
+        <f:Window ID="Window1" runat="server" Title="登录表单" IsModal="false" EnableClose="false" WindowPosition="GoldenSection" Width="450px">
             <Items>
                 <f:SimpleForm ID="SimpleForm1" runat="server" ShowBorder="false" BodyPadding="10px" LabelWidth="80px" ShowHeader="false">
                     <Items>
@@ -44,8 +47,8 @@
             <Toolbars>
                 <f:Toolbar ID="Toolbar1" runat="server" Position="Bottom" ToolbarAlign="Right">
                     <Items>
-                        <f:Button ID="btnLogin" ButtonColor="Primary" Text="登录" Type="Submit" ValidateForms="SimpleForm1" ValidateTarget="Top"
-                            runat="server" OnClick="btnLogin_Click">
+                        <f:Button ID="btnLogin" ButtonColor="Primary" Text="登录" Type="Submit" ValidateForms="SimpleForm1" ValidateTarget="Top" runat="server"
+                            OnClick="btnLogin_Click">
                         </f:Button>
                     </Items>
                 </f:Toolbar>

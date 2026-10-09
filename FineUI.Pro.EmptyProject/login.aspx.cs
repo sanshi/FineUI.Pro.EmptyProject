@@ -34,7 +34,7 @@ namespace FineUI.Pro.EmptyProject
             // 创建一个 6 位的随机数并保存在 Session 对象中
             Session["CaptchaImageText"] = GenerateRandomCode();
 
-            imgCaptcha.Text = String.Format("<img src=\"{0}\" />", ResolveUrl("~/captcha/captcha.ashx?w=100&h=26&t=" + DateTime.Now.Ticks));
+            imgCaptcha.Text = String.Format("<img src=\"{0}\" />", PageContext.ResolveUrl("~/captcha/captcha.ashx?w=100&h=26&t=" + DateTime.Now.Ticks));
         }
 
 

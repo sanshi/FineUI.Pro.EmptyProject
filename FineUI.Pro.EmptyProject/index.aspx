@@ -6,26 +6,29 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>FineUI.Pro 空项目</title>
-    <link href="~/res/css/index.css" rel="stylesheet" />
+    <%-- 将资源表达式放在独立容器内，保持 head 可追加控件，确保 FineUI 能插入公共脚本和样式。 --%>
+    <asp:PlaceHolder runat="server">
+        <link href="<%= PageContext.ResolveUrl("~/res/css/index.css") %>" rel="stylesheet" />
 
-    <style type="text/css">
-        /* 侧边栏宽度：res/js/index.js 从这两个变量读初始宽度与折叠后的微型宽度，
+        <style type="text/css">
+            /* 侧边栏宽度：res/js/index.js 从这两个变量读初始宽度与折叠后的微型宽度，
            必须与侧栏区域上的 Width 属性保持一致（两处都改，否则初始宽度和拖动宽度会打架）。 */
-        :root {
-            --sidebar-width: 320px;
-            --sidebar-minimode-width: 70px;
-        }
-    </style>
+            :root {
+                --sidebar-width: 320px;
+                --sidebar-minimode-width: 70px;
+            }
+
+        </style>
+    </asp:PlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
         <f:PageManager ID="PageManager1" AutoSizePanelID="mainPanel" runat="server"></f:PageManager>
         <f:Panel ID="mainPanel" Layout="Region" CssClass="mainpanel" ShowBorder="false" ShowHeader="false" runat="server">
             <items>
-                <f:Panel ID="sidebarRegion" CssClass="sidebarregion" RegionPosition="Left"
-                    ShowBorder="false" Width="320" ShowHeader="false"
-                    EnableCollapse="false" Collapsed="false" Layout="VBox" runat="server"
-                    RegionSplit="true" RegionSplitIcon="false" RegionSplitWidth="3" RegionSplitTransparent="true">
+                <f:Panel ID="sidebarRegion" CssClass="sidebarregion" RegionPosition="Left" ShowBorder="false" Width="320" ShowHeader="false"
+                    EnableCollapse="false" Collapsed="false" Layout="VBox" runat="server" RegionSplit="true" RegionSplitIcon="false" RegionSplitWidth="3"
+                    RegionSplitTransparent="true">
                     <Items>
                         <f:ContentPanel CssClass="topregion" ShowBorder="false" ShowHeader="false" runat="server">
                             <div id="sideheader" class="f-widget-header f-mainheader">
@@ -49,8 +52,8 @@
                         </f:ContentPanel>
                         <f:Panel ID="leftPanel" CssClass="leftregion" BoxFlex="1" ShowBorder="false" ShowHeader="false" Layout="Fit" runat="server">
                             <Items>
-                                <f:Tree runat="server" ShowBorder="false" ShowHeader="false" ID="treeMenu" EnableSingleClickExpand="true"
-                                    HeaderStyle="true" AllHeaderStyle="true" HideHScrollbar="true" HideVScrollbar="true" ExpanderToRight="true">
+                                <f:Tree runat="server" ShowBorder="false" ShowHeader="false" ID="treeMenu" EnableSingleClickExpand="true" HeaderStyle="true"
+                                    AllHeaderStyle="true" HideHScrollbar="true" HideVScrollbar="true" ExpanderToRight="true">
                                     <Nodes>
                                         <f:TreeNode Text="默认分类" Expanded="true">
                                             <f:TreeNode Text="开始页面" NavigateUrl="~/hello.aspx"></f:TreeNode>
@@ -62,19 +65,20 @@
                         </f:Panel>
                     </Items>
                 </f:Panel>
-                <f:Panel ID="bodyRegion" CssClass="bodyregion" RegionPosition="Center" ShowBorder="false" ShowHeader="false"
-                    Layout="VBox" runat="server">
+                <f:Panel ID="bodyRegion" CssClass="bodyregion" RegionPosition="Center" ShowBorder="false" ShowHeader="false" Layout="VBox" runat="server">
                     <Items>
                         <f:ContentPanel ID="topPanel" CssClass="topregion" ShowBorder="false" ShowHeader="false" runat="server">
                             <div id="header" class="f-widget-header f-mainheader">
                                 <div class="header-left">
-                                    <f:Button runat="server" ID="btnCollapseSidebar" CssClass="icononlyaction" ToolTip="折叠/展开侧边栏" IconAlign="Top" IconFont="_Fold" EnableDefaultState="false" EnableDefaultCorner="false" TabIndex="-1" ClickHandler="onFoldClick"></f:Button>
+                                    <f:Button runat="server" ID="btnCollapseSidebar" CssClass="icononlyaction" ToolTip="折叠/展开侧边栏" IconAlign="Top"
+                                        IconFont="_Fold" EnableDefaultState="false" EnableDefaultCorner="false" TabIndex="-1" ClickHandler="onFoldClick">
+                                    </f:Button>
                                 </div>
                                 <div class="header-right">
-                                   <f:Button runat="server" CssClass="icononlyaction themes" ID="btnThemeSelect" ToolTip="主题仓库" IconAlign="Top" IconFont="_Skin"
- EnableDefaultState="false" EnableDefaultCorner="false" ClickHandler="onThemeSelectClick"></f:Button>
+                                    <f:Button runat="server" CssClass="icononlyaction themes" ID="btnThemeSelect" ToolTip="主题仓库" IconAlign="Top"
+                                        IconFont="_Skin" EnableDefaultState="false" EnableDefaultCorner="false" ClickHandler="onThemeSelectClick"></f:Button>
                                     <f:Button runat="server" CssClass="userpicaction" Text="三生石上" IconUrl="~/res/images/my_face_80.jpg" IconAlign="Left"
- EnableDefaultState="false" EnableDefaultCorner="false">
+                                        EnableDefaultState="false" EnableDefaultCorner="false">
                                         <Menu runat="server">
                                             <f:MenuButton Text="个人信息" IconFont="_User" runat="server" ClickHandler="onUserProfileClick"></f:MenuButton>
                                             <f:MenuSeparator runat="server"></f:MenuSeparator>
@@ -84,17 +88,18 @@
                                 </div>
                             </div>
                         </f:ContentPanel>
-                        <f:TabStrip ID="mainTabStrip" CssClass="centerregion" ShowInkBar="true" InkBarPosition="Bottom" BoxFlex="1" ShowBorder="true" EnableTabCloseMenu="true" runat="server">
+                        <f:TabStrip ID="mainTabStrip" CssClass="centerregion" ShowInkBar="true" InkBarPosition="Bottom" BoxFlex="1" ShowBorder="true"
+                            EnableTabCloseMenu="true" runat="server">
                             <Tabs>
                                 <f:Tab ID="tabHomepage" Title="首页" IconFont="_Home" BodyPadding="10px" AutoScroll="true" runat="server">
                                     <Content>
                                         <h2 style="margin-top: 0;">FineUI.Pro</h2>
                                         .NET 企业级全栈 UI 框架
-                                        
+
                                         <br />
                                         <h2>FineUI的使命</h2>
                                         创建 No JavaScript，No CSS，No UpdatePanel，No ViewState，No WebServices 的网站应用程序
-                                        
+
                                         <br />
                                         <h2>支持的浏览器</h2>
                                         Chrome、Firefox、Safari、Edge
@@ -102,7 +107,7 @@
                                         <br />
                                         <h2>授权协议</h2>
                                         商业授权
-                                            
+
                                         <br />
                                         <h2>相关链接</h2>
                                         <ul class="list">
@@ -137,8 +142,7 @@
         </f:Panel>
 
         <f:Window ID="windowThemeRoller" Title="主题仓库" Hidden="true" EnableIFrame="true" IFrameUrl="./common/themes.aspx" ClearIFrameAfterClose="false"
-            runat="server" IsModal="true" Width="850px" Height="600px" EnableClose="true"
-            EnableMaximize="true" EnableResize="true"></f:Window>
+            runat="server" IsModal="true" Width="850px" Height="600px" EnableClose="true" EnableMaximize="true" EnableResize="true"></f:Window>
     </form>
     <script>
         // 顶栏右侧的用户菜单：示例框架页的 index.js 里没有这两个回调，留在页面上
@@ -158,7 +162,8 @@
             btnCollapseSidebar: '<%= btnCollapseSidebar.ClientID %>',
             windowThemeRoller: '<%= windowThemeRoller.ClientID %>'
         };
+
     </script>
     <script type="text/javascript" src="<%= PageContext.ResolveUrl("~/res/js/index.js?v" + GlobalConfig.ProductVersion) %>"></script>
-    </body>
+</body>
 </html>

@@ -38,3 +38,4 @@ NuGet.Config
 FineUI*.lic*.config
 FineUI.Enterprise.props
 FineUI.Pro.Enterprise.props
+/FineUI.Pro.EmptyProject/packages.config
